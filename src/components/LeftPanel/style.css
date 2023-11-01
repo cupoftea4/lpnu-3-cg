@@ -1,0 +1,110 @@
+.left-panel {
+  align-items: center;
+  background-color: var(--variable-collection-bg-light);
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 20px 10px;
+  position: relative;
+}
+
+.left-panel .top {
+  align-items: center;
+  display: inline-flex;
+  flex-direction: column;
+  gap: 16px;
+  height: 412px;
+  position: relative;
+}
+
+.left-panel .logo {
+  height: 22.65px;
+  position: relative;
+  width: 36.96px;
+}
+
+.left-panel .navigation {
+  align-items: center;
+  align-self: stretch;
+  display: flex;
+  flex: 0 0 auto;
+  flex-direction: column;
+  gap: 22px;
+  position: relative;
+  width: 100%;
+}
+
+.left-panel .selected {
+  align-items: center;
+  display: inline-flex;
+  justify-content: center;
+  left: 0;
+  padding: 2px 3px;
+  position: absolute;
+}
+
+.left-panel .div {
+  background-color: var(--variable-collection-blue);
+  border-radius: 17px;
+  height: 34px;
+  position: relative;
+  width: 3px;
+}
+
+.left-panel .rectangle {
+  background-color: var(--variable-collection-blue-20);
+  border-radius: var(--variable-collection-border-radius);
+  height: var(--variable-collection-panel-selected-rect-size);
+  position: relative;
+  width: var(--variable-collection-panel-selected-rect-size);
+}
+
+.left-panel .img {
+  flex: 0 0 auto;
+  position: relative;
+}
+
+.left-panel .img-2 {
+  align-self: stretch;
+  flex: 0 0 auto;
+  position: relative;
+  width: 100%;
+}
+
+.left-panel .bottom {
+  align-items: center;
+  align-self: stretch;
+  display: flex;
+  flex: 0 0 auto;
+  flex-direction: column;
+  gap: 10px;
+  justify-content: center;
+  position: relative;
+  width: 100%;
+}
+
+.left-panel .achievements {
+  height: 36px;
+  position: relative;
+  width: 40.5px;
+}
+
+.left-panel .page-4 {
+  gap: 10px;
+  top: 222px;
+}
+
+.left-panel .page-3 {
+  gap: 9px;
+  top: 148px;
+}
+
+.left-panel .page-2 {
+  gap: 9px;
+  top: 74px;
+}
+
+.left-panel .fractals {
+  gap: 9px;
+  top: 0;
+}

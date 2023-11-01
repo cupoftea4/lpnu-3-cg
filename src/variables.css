@@ -1,0 +1,23 @@
+:root {
+  --dark-theme: rgba(28, 28, 28, 1);
+  --variable-collection-bg: rgba(13, 13, 13, 1);
+  --variable-collection-bg-light: rgba(18, 18, 18, 1);
+  --variable-collection-blue: rgba(77, 121, 255, 1);
+  --variable-collection-blue-20: rgba(77, 121, 255, 0.2);
+  --variable-collection-border-radius: 8px;
+  --variable-collection-gray: rgba(143, 155, 179, 1);
+  --variable-collection-green: rgba(121, 233, 119, 1);
+  --variable-collection-green-20: rgba(121, 233, 119, 0.2);
+  --variable-collection-lt-bg: var(--variable-collection-white);
+  --variable-collection-lt-bg-light: rgba(247, 249, 252, 1);
+  --variable-collection-lt-text: var(--variable-collection-bg);
+  --variable-collection-orange: rgba(255, 163, 76, 1);
+  --variable-collection-orange-20: rgba(255, 163, 77, 0.2);
+  --variable-collection-panel-icon-height: 36px;
+  --variable-collection-panel-icon-width: var(--variable-collection-panel-icon-height);
+  --variable-collection-panel-selected-rect-size: 46px;
+  --variable-collection-red: rgba(219, 66, 66, 1);
+  --variable-collection-text: rgba(247, 249, 252, 1);
+  --variable-collection-white: rgba(255, 255, 255, 1);
+  --variable-collection-yellow: rgba(233, 195, 60, 1);
+}

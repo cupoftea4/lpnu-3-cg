@@ -1,0 +1,133 @@
+.settings-cards {
+  align-items: center;
+  border-radius: 8px;
+  display: flex;
+  gap: 14px;
+  padding: 32px 28px;
+  position: relative;
+  width: 259px;
+}
+
+.settings-cards .class {
+  flex: 1 !important;
+  flex-grow: 1 !important;
+  width: unset !important;
+}
+
+.settings-cards .class-2 {
+  width: 116.55px !important;
+}
+
+.settings-cards .adjust-icon {
+  height: 30px !important;
+  position: relative !important;
+  width: 30px !important;
+}
+
+.settings-cards .select {
+  align-items: center;
+  display: flex;
+  flex: 1;
+  flex-grow: 1;
+  justify-content: center;
+  position: relative;
+}
+
+.settings-cards .chevron-right {
+  height: 24px !important;
+  position: relative !important;
+  width: 25.95px !important;
+}
+
+.settings-cards .AAAAAAAA {
+  position: relative;
+}
+
+.settings-cards .rectangle {
+  background-color: #216f90;
+  border-radius: 8px;
+  height: 28px;
+  position: relative;
+  width: 28px;
+}
+
+.settings-cards .div {
+  background-color: #90217e;
+  border-radius: 8px;
+  height: 28px;
+  position: relative;
+  width: 28px;
+}
+
+.settings-cards .rectangle-2 {
+  background-color: #219040;
+  border-radius: 8px;
+  height: 28px;
+  position: relative;
+  width: 28px;
+}
+
+.settings-cards .function-icon {
+  height: 27.2px !important;
+  position: relative !important;
+  width: 34px !important;
+}
+
+.settings-cards.blue {
+  background-color: #4c79ff33;
+}
+
+.settings-cards.blue-adjustment {
+  background-color: #4c79ff33;
+}
+
+.settings-cards.orange-adjustment {
+  background-color: var(--variable-collection-orange-20);
+}
+
+.settings-cards.green-adjustment {
+  background-color: var(--variable-collection-green-20);
+}
+
+.settings-cards.orange {
+  background-color: var(--variable-collection-orange-20);
+}
+
+.settings-cards.green {
+  background-color: var(--variable-collection-green-20);
+}
+
+.settings-cards.blue-adjustment .AAAAAAAA {
+  color: var(--variable-collection-blue);
+  font-family: "Noto Sans", Helvetica;
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: 0;
+  line-height: 24px;
+  text-align: right;
+  white-space: nowrap;
+  width: fit-content;
+}
+
+.settings-cards.orange-adjustment .AAAAAAAA {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  width: 98.03px;
+}
+
+.settings-cards.green-adjustment .AAAAAAAA {
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  color: var(--variable-collection-green);
+  display: -webkit-box;
+  flex: 1;
+  font-family: "Noto Sans", Helvetica;
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: 0;
+  line-height: 24px;
+  overflow: hidden;
+  text-align: center;
+  text-overflow: ellipsis;
+}

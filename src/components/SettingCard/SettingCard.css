@@ -1,0 +1,33 @@
+.setting-card {
+  border-radius: 10px;
+  padding: 10px;
+  width: 100%;
+  min-width: 16rem; /* Adjust as needed */
+  min-height: 5.5rem; /* Adjust as needed */
+  /* display: flex;
+  align-items: center;
+  justify-content: center; */
+}
+
+.setting-card.blue {
+  --bg-main-color: hsla(217, 89%, 61%, 0.2);
+  --main-color: hsl(217, 89%, 61%);
+  background-color: var(--bg-main-color);
+  color: var(--main-color);
+}
+
+.setting-card.orange {
+  --bg-main-color: hsla(36, 100%, 50%, 0.2);
+  --main-color: hsl(36, 100%, 50%);
+  background-color: var(--bg-main-color);
+  color: var(--main-color);
+}
+
+.setting-card.green {
+  --bg-main-color: hsla(122, 39%, 49%, 0.2);
+  --main-color: hsl(122, 39%, 49%);
+  background-color: var(--bg-main-color);
+  color: var(--main-color);
+}
+
+/* ... Add more colors as needed */

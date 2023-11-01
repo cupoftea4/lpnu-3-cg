@@ -1,0 +1,24 @@
+.some-text {
+  height: 24px;
+  position: relative;
+  width: 117px;
+}
+
+.some-text .text-wrapper {
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  color: var(--variable-collection-green);
+  display: -webkit-box;
+  font-family: "Noto Sans", Helvetica;
+  font-size: 16px;
+  font-weight: 500;
+  left: 0;
+  letter-spacing: 0;
+  line-height: 24px;
+  overflow: hidden;
+  position: absolute;
+  text-align: right;
+  text-overflow: ellipsis;
+  top: -1px;
+  width: 117px;
+}

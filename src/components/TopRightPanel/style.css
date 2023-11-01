@@ -1,0 +1,35 @@
+.top-right-panel {
+  align-items: center;
+  display: inline-flex;
+  gap: 16px;
+  position: relative;
+}
+
+.top-right-panel .vuesax-bulk-sun {
+  position: relative;
+}
+
+.top-right-panel .frame {
+  align-items: center;
+  display: inline-flex;
+  flex: 0 0 auto;
+  gap: 20px;
+  justify-content: center;
+  padding: 4px 0px;
+  position: relative;
+}
+
+.top-right-panel .vector {
+  height: 26px;
+  position: relative;
+  width: 29.25px;
+}
+
+.top-right-panel .light {
+  flex: 0 0 auto;
+}
+
+.top-right-panel .dark {
+  height: 32px;
+  width: 32px;
+}
