@@ -2,8 +2,6 @@ import {
  setUniform, resizeCanvasToDisplaySize, createProgram, createShader
 } from "./webgl.js"
 
-// const canvas = document.getElementById("canvas");
-// const gl = canvas.getContext("webgl2");
 let vertexCode: string, fragmentCode: string;
 
 async function init(canvas: HTMLCanvasElement, gl: WebGL2RenderingContext) {
@@ -95,5 +93,18 @@ export function setMousePos(gl: WebGL2RenderingContext, x: number, y: number) {
   const programLocation = gl.getParameter(gl.CURRENT_PROGRAM);
   setUniform(gl, programLocation, "2f", "mousepos", [x, y]);
 }
+
+export function setHueShift(gl: WebGL2RenderingContext, program: WebGLProgram, color: number) {
+  setUniform(gl, program, "1f", "hueShift", color);
+}
+
+export function setVibrance(gl: WebGL2RenderingContext, program: WebGLProgram, color: number) {
+  setUniform(gl, program, "1f", "colorVibrance", color);
+}
+
+export function setSaturation(gl: WebGL2RenderingContext, program: WebGLProgram, color: number) {
+  setUniform(gl, program, "1f", "colorSaturation", color);
+}
+
 
 export default init;

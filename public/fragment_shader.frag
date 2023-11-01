@@ -9,6 +9,10 @@ uniform float height;
 uniform int power;
 uniform int iterations;
 
+uniform float hueShift;
+uniform float colorSaturation;
+uniform float colorVibrance;
+
 bool error;
 
 #define complex vec2
@@ -130,15 +134,41 @@ vec4 newtonsMethod(complex c) {
     z = z1;
   }
 
+  // yellow 0.2
+  // green 0.4
+  // blue 0.6
+  // purple 0.9
+  // red 0.0
+
   // Make color based on z
-  float hue = c_arg(z)/1.0/PI; // a_tan(x)
-  float saturation = 7.0/sqrt(c_abs(z));
+  float hue = abs(c_arg(z)/2.0/PI); // a_tan(x)
+  if (hueShift >= 0.0) {
+    hue = abs(c_arg(z)/10.0/PI - hueShift);
+  }
+
+  // 0.1 - 2.0
+
+  float satur = 1.0;
+
+  if (colorSaturation > 0.0) {
+    satur = colorSaturation;
+  }
+
+  float saturation = satur /sqrt(c_abs(z));
 
   if (c_abs(z) < 0.1) {
     saturation = 0.0;
   }
 
-  float vibrance = max(1.0-float(steps)*0.025, 0.0);
+  // 0.01 - 0.1
+
+  float vibr = 0.025;
+
+  if (colorVibrance > 0.0) {
+    vibr = colorVibrance;
+  }
+
+  float vibrance = max(1.0 - float(steps)*vibr, 0.0);
 
   if (c_abs(z) > 100.0) {
     vibrance = 0.0;

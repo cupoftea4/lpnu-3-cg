@@ -8,11 +8,17 @@ type OwnProps = {
   setColor: (color: number) => void;
 }
 
-const COLORS_PER_ROW = 5;
+const COLORS_PER_ROW = 4;
 
-export const Color = ({ hex, ...props }: { hex: string } & React.ButtonHTMLAttributes<HTMLButtonElement>) => {
+export const ColorTile = ({ color, ...props }: { color: string } & React.ButtonHTMLAttributes<HTMLButtonElement>) => {
+  let backgroundColor = color;
+
+  if (color === "colorful") {
+    backgroundColor = "linear-gradient(45deg, firebrick, goldenrod, seagreen, darkblue)";
+  }
+
   return (
-    <button {...props} style={{ backgroundColor: hex, width: "2rem", height: "2rem", borderRadius: ".5rem", display: "inline-block", margin: ".25rem" }}/>
+    <button {...props} style={{ background: backgroundColor, width: "2rem", height: "2rem", borderRadius: ".5rem", display: "inline-block", margin: ".25rem" }}/>
   )
 }
 
@@ -52,16 +58,16 @@ const ChooseColorSetting: FC<OwnProps> = ({ colors, setColor }) => {
     <SettingCard color="blue" onClick={(e) => onClick(e, -1)} className={isChoosing ? styles.choosing : ""}>
       {currentPosition === -1 ? (
         <div className={styles.container}>
-          <Color hex={currentColor} />
+          <ColorTile color={currentColor} />
           <span>Choose color</span>
           <RightArrowIcon className={""}/>
         </div>
       ) : (
         <div className={styles.container}>
           {colors.slice(currentPosition * COLORS_PER_ROW, currentPosition * COLORS_PER_ROW + COLORS_PER_ROW).map((color, i) => (
-            <Color hex={color} onClick={(e) => onClick(e, currentPosition * COLORS_PER_ROW + i)}  key={i} />
+            <ColorTile color={color} onClick={(e) => onClick(e, currentPosition * COLORS_PER_ROW + i)} key={i} />
           ))}
-          <RightArrowIcon className={""} onClick={nextFunction}/>
+          {currentPosition !== colors.length /3 - 1 && <RightArrowIcon className={""} onClick={nextFunction}/>}
         </div>
       )
       }
@@ -71,4 +77,3 @@ const ChooseColorSetting: FC<OwnProps> = ({ colors, setColor }) => {
 }
 
 export default ChooseColorSetting
-
