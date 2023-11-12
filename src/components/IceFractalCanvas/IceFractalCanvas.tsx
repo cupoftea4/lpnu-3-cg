@@ -16,7 +16,7 @@ const _FractalCanvas: FC<OwnProps> = ({ iterations, lengthModifier = 0.8, angleM
     const canvas = canvasRef.current;
     const ctx = canvasRef.current?.getContext("2d");
     if (!ctx) return;
-    ctx.strokeStyle = "black";
+    ctx.strokeStyle = "white";
   
     const iters = iterations > 10 ? 5 : iterations; // Safety check
     start(ctx, iters, lengthModifier, angleModifier);

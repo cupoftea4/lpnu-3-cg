@@ -2,7 +2,7 @@ interface Props {
   className: string;
 }
 
-export const DownloadIcon1 = ({ className }: Props): JSX.Element => {
+export const DownloadIcon = ({ className }: Props): JSX.Element => {
   return (
     <svg
       className={`download-icon-1 ${className}`}

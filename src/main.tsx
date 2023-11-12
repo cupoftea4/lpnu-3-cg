@@ -1,9 +1,10 @@
 import ReactDOM from 'react-dom/client'
-import { DarkFractals } from './screens/DarkFractals/DarkFractals.tsx'
 import './styles/reset.css'
+import './variables.css'
+import App from './App.tsx'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   // <React.StrictMode>
-    <DarkFractals />
+    <App />
   // </React.StrictMode>,
 )

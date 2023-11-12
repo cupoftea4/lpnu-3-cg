@@ -81,7 +81,7 @@ const _NewtonFractal: FC<OwnProps> = ({ iterations = 50, power = 5, hueColor = "
   }, [gl, program, vibrance])
   
   return (
-    <canvas id="fractal-canvas" width="1200" height="600" ref={canvasRef} />
+    <canvas id="fractal-canvas" width="1000" height="500" ref={canvasRef} />
   )
 }
 

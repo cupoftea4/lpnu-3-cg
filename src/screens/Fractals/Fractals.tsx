@@ -9,6 +9,9 @@ import ChooseColorSetting from "../../components/ChooseColorSetting/ChooseColorS
 import { HueColor, NewtonFractal } from "../../components/NewtonFractal/NewtonFractal";
 import "./style.css";
 
+
+const colors: HueColor[] = ["blue", "green", "red", "purple", "yellow", "colorful"];
+
 const functions = ["Ice fractal", "x^3 + c", "x^4 + c", "x^5 + c", "x^6 + c", "x^7 + c"];
 enum Functions {
   IceFractal,
@@ -20,12 +23,10 @@ enum Functions {
   X8,
 }
 
-const colors: HueColor[] = ["blue", "green", "red", "purple", "yellow", "colorful"];
-
-export const DarkFractals = (): JSX.Element => {
+export const Fractals = (): JSX.Element => {
   const [iterations, setIterations] = useState(2);
  
-  const [currentFunction, setCurrentFunction] = useState(Functions.X3);
+  const [currentFunction, setCurrentFunction] = useState(Functions.IceFractal);
   const [lengthModifier, setLengthModifier] = useState(0.8);
   const [angleModifier, setAngleModifier] = useState(0.5);
   

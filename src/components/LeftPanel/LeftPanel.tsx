@@ -1,8 +1,9 @@
+import { Link } from "react-router-dom";
 import "./style.css";
 
 interface Props {
   page: "fractals" | "page-2" | "page-3" | "page-4";
-  className: string;
+  className?  : string;
 }
 
 export const LeftPanel = ({ page, className }: Props): JSX.Element => {
@@ -19,28 +20,32 @@ export const LeftPanel = ({ page, className }: Props): JSX.Element => {
             <div className="div" />
             <div className="rectangle" />
           </div>
-          <img
-            className="img"
-            alt="Fractals button" 
-            src={
-              page === "fractals"
-                ? "https://c.animaapp.com/HYZupsIx/img/fractals-button-4.svg"
-                : "https://c.animaapp.com/HYZupsIx/img/fractals-button-3.svg"
-            }
-          />
-          <img
-            className="img-2"
-            alt="Colors button"
-            src={
-              page === "page-2"
-                ? "https://c.animaapp.com/HYZupsIx/img/colors-button-1.svg"
-                : page === "page-3"
-                ? "https://c.animaapp.com/HYZupsIx/img/colors-button-2.svg"
-                : page === "page-4"
-                ? "https://c.animaapp.com/HYZupsIx/img/colors-button-3.svg"
-                : "https://c.animaapp.com/HYZupsIx/img/colors-button-4.svg"
-            }
-          />
+          <Link to="/">
+            <img
+              className="img"
+              alt="Fractals button" 
+              src={
+                page === "fractals"
+                  ? "https://c.animaapp.com/HYZupsIx/img/fractals-button-4.svg"
+                  : "https://c.animaapp.com/HYZupsIx/img/fractals-button-3.svg"
+              }
+            />
+          </Link>
+          <Link to="/colors">
+            <img
+              className="img-2"
+              alt="Colors button"
+              src={
+                page === "page-2"
+                  ? "https://c.animaapp.com/HYZupsIx/img/colors-button-1.svg"
+                  : page === "page-3"
+                  ? "https://c.animaapp.com/HYZupsIx/img/colors-button-2.svg"
+                  : page === "page-4"
+                  ? "https://c.animaapp.com/HYZupsIx/img/colors-button-3.svg"
+                  : "https://c.animaapp.com/HYZupsIx/img/colors-button-4.svg"
+              }
+            />
+          </Link>
           <img
             className="img-2"
             alt="Transform button"

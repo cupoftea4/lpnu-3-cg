@@ -96,6 +96,7 @@
   position: relative;
   white-space: nowrap;
   width: fit-content;
+  color: var(--variable-collection-text);
 }
 
 .dark-fractals .fractal-frame {
