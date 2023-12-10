@@ -5,8 +5,8 @@ import SettingCard from "../../components/SettingCard/SettingCard"
 import { TopRightPanel } from "../../components/TopRightPanel"
 import { UploadIcon } from "../../icons/UploadIcon"
 import {
-  adjustFragmentLightnessForColor, 
-  adjustLightnessForColor, 
+  adjustFragmentForColor, 
+  adjustForColor, 
   colors, 
   getImageData, 
   getImagePixel, 
@@ -24,6 +24,8 @@ export const Colors = () => {
   const [transformedImageSrc, setTransformedImageSrc] = useState<string | null>(null);
   
   const [lightness, setLightness] = useState(1); // [0.1, 2.0]
+  const [saturation, setSaturation] = useState(1); // [0.1, 2.0]
+  const [hue, setHue] = useState(0); // [0, 360]
 
   const [rgbValues, setRgbValues] = useState({ r: 0, g: 0, b: 0 });
   const [hslValues, setHslValues] = useState({ h: 0, s: 0, l: 0 });
@@ -49,10 +51,10 @@ export const Colors = () => {
     const img = originalImage.current!;
     const imgData = getImageData(img);
     if (!imgData) return;
-    const newData = adjustLightnessForColor(imgData, rgbColors[color], lightness - 1, tolerance);
+    const newData = adjustForColor(imgData, rgbColors[color], lightness - 1, hue, saturation - 1, tolerance);
     const transformedSrc = imageDataToDataUrl(newData, img.naturalWidth, img.naturalHeight);
     setTransformedImageSrc(transformedSrc);
-  }, [color, imageSrc, lightness, tolerance]);
+  }, [color, hue, imageSrc, lightness, saturation, tolerance]);
 
   const clearImageProcessing = useCallback(() => {
     if (!imageSrc) return;
@@ -78,10 +80,12 @@ export const Colors = () => {
       endY: Math.round(Math.max(selectionStart.y, selectionEnd.y) * scaleRatio),
     };
   
-    const newData = adjustFragmentLightnessForColor(
+    const newData = adjustFragmentForColor(
       imgData, 
       rgbColors[color], 
       lightness - 1, 
+      hue,
+      saturation -1,
       selection, 
       img.naturalWidth, 
       tolerance
@@ -90,7 +94,7 @@ export const Colors = () => {
     setTransformedImageSrc(transformedSrc);
   }, [
     clearImageProcessing, 
-    color, imageSrc, isSelecting, lightness, tolerance,
+    color, imageSrc, isSelecting, lightness, hue, saturation, tolerance,
     selectionEnd.x, selectionEnd.y, selectionStart.x, selectionStart.y
   ]);
 
@@ -251,6 +255,21 @@ export const Colors = () => {
                   max={2.0}
                   toFixed={1}
                   progressState={[lightness, setLightness]} />
+              </SettingCard>
+              <SettingCard color="orange">
+                <ProgressBar 
+                  title="Saturation"
+                  steps={20} 
+                  max={2.0}
+                  toFixed={1}
+                  progressState={[saturation, setSaturation]} />
+              </SettingCard>
+              <SettingCard color="orange">
+                <ProgressBar 
+                  title="Hue"
+                  steps={72} 
+                  max={360}
+                  progressState={[hue, setHue]} />
               </SettingCard>
               <ChooseColorSetting
                 colors={colors}

@@ -9,7 +9,8 @@ export const colors = [
   "mediumorchid" as const, 
   "firebrick" as const, 
   "black" as const, 
-  "white" as const
+  "white" as const,
+  "colorful" as const
 ];
 
 type Color = typeof colors[number]; 
@@ -22,6 +23,7 @@ export const rgbColors: Record<Color, ColorModelValues> = {
   firebrick: [200, 50, 50],
   white: [200, 200, 200],
   black: [50, 50, 50],
+  colorful: [-1, -1, -1]
 }
 
 
@@ -30,7 +32,7 @@ export type ColorModelValues = [number, number, number];
 export function rgbToHsl(r: number, g: number, b: number): [number, number, number] {
   r /= 255, g /= 255, b /= 255;
   const max = Math.max(r, g, b), min = Math.min(r, g, b);
-  const l = (max + min) / 2;
+  let l = (max + min) / 2;
   let h, s;
 
   if(max === min) {
@@ -49,7 +51,19 @@ export function rgbToHsl(r: number, g: number, b: number): [number, number, numb
       h /= 6;
   }
 
-  return [Math.round(h * 360), Math.round(s * 100), Math.round(l * 100)];
+  const h360 = Math.round(h * 360);
+  const hModifier = 0;
+  h = h360 + hModifier > 360 ? (h360 + hModifier) % 360 : h360 + hModifier;
+
+  const s100 = Math.round(s * 100);
+  const sModifier = 0;
+  s = s100 + sModifier > 100 ? 100 : s100 + sModifier;
+
+  const l100 = Math.round(l * 100);
+  const lModifier = 0;
+  l = l100 + lModifier > 100 ? 100 : l100 + lModifier;
+  
+  return [h, s, l];
 }
 
 export function hslToRgb(h: number, s: number, l: number): [number, number, number] {
@@ -77,10 +91,12 @@ function hueToRgb(p: number, q: number, t: number) {
   return p;
 }
 
-export function adjustLightnessForColor(
+export function adjustForColor(
   imageData: ImageData, 
   targetColor: [number, number, number], 
   lightnessChange: number,
+  hueChange: number,
+  saturationChange: number,
   tolerance: number = 100
 ): ImageData {
   const data = imageData.data;
@@ -88,16 +104,18 @@ export function adjustLightnessForColor(
   const isPixelColorClose = (r: number, g: number, b: number) => isColorClose(r, g, b, targetColor, tolerance);
 
   for (let i = 0; i < data.length; i += 4) {
-    lightenPixel(data, i, lightnessChange, isPixelColorClose);
+    changePixel(data, i, lightnessChange, hueChange, saturationChange, isPixelColorClose);
   }
 
   return imageData;
 }
 
-export function adjustFragmentLightnessForColor(
+export function adjustFragmentForColor(
   imageData: ImageData, 
   targetColor: [number, number, number], 
-  lightnessChange: number, 
+  lightnessChange: number,
+  hueChange: number, 
+  saturationChange: number,
   selection: Selection,
   naturalWidth: number,
   tolerance: number = 100
@@ -108,17 +126,20 @@ export function adjustFragmentLightnessForColor(
   for (let y = startY; y < endY; y++) {
     for (let x = startX; x < endX; x++) {
       const index = (y * naturalWidth + x) * 4;
-      lightenPixel(data, index, lightnessChange, (r, g, b) =>  isColorClose(r, g, b, targetColor, tolerance));
+      changePixel(data, index, lightnessChange, hueChange, saturationChange, 
+        (r, g, b) =>  isColorClose(r, g, b, targetColor, tolerance));
     }
   }
 
   return imageData;
 }
 
-function lightenPixel(
+function changePixel(
   data: Uint8ClampedArray, 
   index: number, 
   lightnessChange: number,
+  hueChange: number,
+  saturationChange: number,
   isPixelColorClose: ((r: number, g: number, b: number) => boolean)
 ) {
   let r = data[index];
@@ -128,11 +149,17 @@ function lightenPixel(
   if (isPixelColorClose(r, g, b)) {
       const hsl = rgbToHsl(r, g, b);
 
-      const [h, s] = hsl;
+      let s = hsl[1];
       let l = hsl[2];
-
+      let h = hsl[0];
       // Adjust lightness
       l = Math.min(100, l * (1 + lightnessChange));
+
+      // Adjust hue
+      h = h + hueChange > 360 ? (h + hueChange) % 360 : h + hueChange;
+
+      // Adjust saturation
+      s = Math.min(100, s * (1 + saturationChange));
 
       [r, g, b] = hslToRgb(h / 360, s / 100, l / 100);
 
@@ -145,6 +172,10 @@ function lightenPixel(
 
 function isColorClose(r: number, g: number, b: number, targetColor: ColorModelValues, tolerance: number): boolean {
   const [tr, tg, tb] = targetColor;
+
+  if (tr === -1 && tg === -1 && tb === -1) {
+    return true;
+  }
   return Math.abs(r - tr) <= tolerance && 
          Math.abs(g - tg) <= tolerance && 
          Math.abs(b - tb) <= tolerance;
