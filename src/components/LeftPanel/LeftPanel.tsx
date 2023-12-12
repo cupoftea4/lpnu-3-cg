@@ -46,19 +46,21 @@ export const LeftPanel = ({ page, className }: Props): JSX.Element => {
               }
             />
           </Link>
-          <img
-            className="img-2"
-            alt="Transform button"
-            src={
-              page === "page-2"
-                ? "https://c.animaapp.com/HYZupsIx/img/transform-button-1.svg"
-                : page === "page-3"
-                ? "https://c.animaapp.com/HYZupsIx/img/transform-button-2.svg"
-                : page === "page-4"
-                ? "https://c.animaapp.com/HYZupsIx/img/transform-button-3.svg"
-                : "https://c.animaapp.com/HYZupsIx/img/transform-button-4.svg"
-            }
-          />
+          <Link to="/transformations">
+            <img
+              className="img-2"
+              alt="Transform button"
+              src={
+                page === "page-2"
+                  ? "https://c.animaapp.com/HYZupsIx/img/transform-button-1.svg"
+                  : page === "page-3"
+                  ? "https://c.animaapp.com/HYZupsIx/img/transform-button-2.svg"
+                  : page === "page-4"
+                  ? "https://c.animaapp.com/HYZupsIx/img/transform-button-3.svg"
+                  : "https://c.animaapp.com/HYZupsIx/img/transform-button-4.svg"
+              }
+            />
+          </Link>
           <img
             className="img-2"
             alt="Tests button"

@@ -3,7 +3,7 @@ import './SettingCard.css';
 
 type OwnProps = {
   color: string;
-  children: React.ReactNode;
+  children?: React.ReactNode;
 }
 
 const SettingCard: FC<OwnProps & React.DetailedHTMLProps<React.HTMLAttributes<HTMLButtonElement>, HTMLButtonElement>> = (

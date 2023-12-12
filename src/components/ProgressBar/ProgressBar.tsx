@@ -5,35 +5,34 @@ interface ProgressBarProps {
   title: string;
   steps?: number;
   max?: number;
+  min?: number;
   toFixed?: number;
-  progressState: [number, React.Dispatch<React.SetStateAction<number>>];
+  progressState: [number, React.Dispatch<React.SetStateAction<number>> | ((newVal: number) => void)];
 }
 
-const ProgressBar: React.FC<ProgressBarProps> = ({ progressState, title, steps = 10, max = steps, toFixed = 0 }) => {
+const ProgressBar: React.FC<ProgressBarProps> = ({ progressState, title, steps = 10, max = steps, toFixed = 0, min = 0 }) => {
   const barRef = useRef<HTMLDivElement>(null);
   const [dragging, setDragging] = useState(false);
   
-  const stepSize = max / (steps);
+  const stepSize = (max - min) / steps;
   const [progress, setProgress] = progressState;
+
+  const calculateProgress = useCallback((position: number, rectWidth: number) => {
+    const progressValue = ((position / rectWidth) * (max - min)) + min;
+    const closestStep = Math.round(progressValue / stepSize) * stepSize;
+    return Math.max(min, Math.min(max, closestStep));
+  }, [max, min, stepSize]);
 
   const handleMouseMove = useCallback((e: MouseEvent) => {
     if (dragging && barRef.current) {
       const rect = barRef.current.getBoundingClientRect();
       const movedPosition = e.clientX - rect.left;
-      const stepProgress = (movedPosition / rect.width) * max;
-      const closestStep = Math.round(stepProgress / stepSize) * stepSize;
-  
-      // Ensure progress is within 0-max
-      const clampedProgress = Math.max(0, Math.min(max, closestStep));
-      setProgress(clampedProgress);
+      setProgress(calculateProgress(movedPosition, rect.width));
     }
-  }, [dragging, max, setProgress, stepSize]);
+  }, [calculateProgress, dragging, setProgress]);
   
-
   useEffect(() => {
-    const handleMouseUp = () => {
-      setDragging(false);
-    };
+    const handleMouseUp = () => setDragging(false);
     
     document.addEventListener('mouseup', handleMouseUp);
     document.addEventListener('mousemove', handleMouseMove);
@@ -48,13 +47,13 @@ const ProgressBar: React.FC<ProgressBarProps> = ({ progressState, title, steps =
     if (barRef.current && !dragging) {
       const rect = barRef.current.getBoundingClientRect();
       const clickedPosition = e.clientX - rect.left;
-      const clickedProgress = (clickedPosition / rect.width) * max;
-      const closestStep = Math.round(clickedProgress / stepSize) * stepSize;
-
-      const clampedProgress = Math.max(0, Math.min(max, closestStep));
-      setProgress(clampedProgress);
+      setProgress(calculateProgress(clickedPosition, rect.width));
     }
   };
+
+  // Adjust the calculation of width and left style to account for the min value
+  const fillWidth = ((progress - min) / (max - min)) * 100;
+  const circleLeft = fillWidth;
 
   return (
     <div>
@@ -63,9 +62,9 @@ const ProgressBar: React.FC<ProgressBarProps> = ({ progressState, title, steps =
         <div className={styles.percentage}>{progress.toFixed(toFixed)}</div>
         <div className={styles["progress-bar"]}>
           <div ref={barRef} onClick={handleProgressClick} className={styles.bar}/>
-          <div style={{ width: `${progress/max*100}%` }} className={styles.fill}></div>
+          <div style={{ width: `${fillWidth}%` }} className={styles.fill}></div>
           <div
-            style={{ left: `${progress/max*100}%` }}
+            style={{ left: `${circleLeft}%` }}
             className={styles.circle}
             onMouseDown={() => setDragging(true)}
           ></div>
