@@ -1,0 +1,64 @@
+.test-button {
+  background-color: var(--variable-collection-blue);
+  color: white;
+  padding: .5rem 4rem;
+  border-radius: 5rem;
+  transition: all .2s ease-in-out;
+}
+
+.test-button:hover {
+  background-color: var(--variable-collection-blue-20);
+  color: var(--variable-collection-blue);
+}
+
+.test-wrapper {
+  color: white;
+  min-height: 30rem;
+  /* background-color: red; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: .5rem;
+}
+
+.test-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: .5rem;
+  color: white;
+
+}
+
+.test-count {
+  font-size: 18px;
+  font-weight: bold;
+  color: white;
+}
+
+.tests-progress {
+  display: flex;
+  height: 20px; /* Set the height of the progress bar */
+  background-color: #e0e0e0; /* Light grey background for incomplete sections */
+  border-radius: 10px; /* Rounded corners for the progress bar */
+  overflow: hidden; /* Ensures the inner bars fit within the rounded corners */
+  width: 100%;
+  max-width: 45rem; /* Full width of the container */
+}
+
+.progress-block {
+  background-color: #e0e0e0; /* Default background color for blocks */
+  transition: width 0.5s ease; /* Smooth transition for width changes */
+  position: relative; /* Relative positioning for the progress bar */
+}
+
+.progress-bar {
+  position: absolute; /* Absolute positioning inside the progress block */
+  left: 0; /* Align to the left side */
+  top: 0; /* Align to the top */
+  bottom: 0; /* Align to the bottom */
+  background-color: #007bff; /* Blue color for completed sections */
+  transition: width 0.5s ease; /* Smooth transition for width changes */
+}

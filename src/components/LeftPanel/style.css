@@ -6,7 +6,7 @@
   justify-content: space-between;
   padding: 20px 10px;
   position: relative;
-  min-height: 100vh;
+  max-height: 100vh;
 }
 
 .left-panel .top {

@@ -4,15 +4,13 @@ import { LeftPanel } from "../../components/LeftPanel"
 import ProgressBar from "../../components/ProgressBar/ProgressBar";
 import SettingCard from "../../components/SettingCard/SettingCard";
 import { TopRightPanel } from "../../components/TopRightPanel"
-import { useShapeInfo } from "../../context/RectangleContext";
+import { Point2D, useShapeInfo } from "../../context/ShapeContext";
 import "./styles.css";
 
-type RotationAnchor = "center" | "A" | "B" | "C" | "D" | "E" | "F" | "G";
-
-const randomInRange = (min: number, max: number): number => Math.random() * (max - min) + min;
-
 const Transform = () => {
-  const [rotationAnchor, setRotationAnchor] = useState("center");
+  const [targetPosition, setTargetPosition] = useState<Point2D>({ x: 0, y: 0 });
+  const [targetRotate, setTargetRotate] = useState(0);
+  const [targetScale, setTargetScale] = useState(1);
 
   const {
     center,
@@ -31,18 +29,24 @@ const Transform = () => {
     if (!isDrawing) {
       setIsDrawing(true);
 
-      const randomRotate = randomInRange(-Math.PI, Math.PI); // Random rotation between -π and π radians
-      // const randomZoom = randomInRange(0.5, 1.5); // Random zoom between 0.5x and 2x
-      const randomX = randomInRange(-1, 1); // Random x movement between -5 and 5 units
-      const randomY = randomInRange(-1, 1); // Random y movement between -5 and 5 units
-      setRotate(randomRotate);
-      setZoom(1.07);
-      setX(randomX);
-      setY(randomY);
+      setRotate(targetRotate);
+      setZoom(targetScale);
+      setX(targetPosition.x);
+      setY(targetPosition.y);
     } else {
       console.log('Already drawing');
     }
   };
+
+  const resetShape = () => {
+    setIsDrawing(false);
+    setRotate(0);
+    setZoom(1);
+    setX(0);
+    setY(0);
+    setCenter({ x: 0, y: 0 });
+    setRadius(2);
+  }
 
   return (
       <div className="transform">
@@ -58,11 +62,19 @@ const Transform = () => {
             <div className="page">
               <div className="preview">
                 <div className="text-wrapper-3">
-                  Rectangle
+                  Hexagon
                 </div>
                 <GeometryCanvas />
+                <div className="button-container">
+                  <button onClick={() => startTransformation()} className="start-button" >
+                    Start transformation
+                  </button>
+                </div>
               </div>
               <div className="right-panel">
+                <div className="text-wrapper-3">
+                Initial values:
+                </div>
                 <SettingCard color="blue">
                   <ProgressBar
                     title="X"
@@ -81,24 +93,46 @@ const Transform = () => {
                 <SettingCard color="orange">
                   <ProgressBar 
                     title="Radius"
-                    steps={200} 
+                    steps={50} 
                     max={100}
                     progressState={[radius, setRadius]}  />
                 </SettingCard>
-                <SettingCard color="orange">
-                  <select value={rotationAnchor} onChange={e => setRotationAnchor(e.target.value as RotationAnchor)}>
-                    <option value={"center"}>Center</option>
-                    <option value={"A"}>A</option>
-                    <option value={"B"}>B</option>
-                    <option value={"C"}>C</option>
-                    <option value={"D"}>D</option>
-                    <option value={"E"}>E</option>
-                    <option value={"F"}>F</option>
-                    <option value={"G"}>G</option>
-                  </select>
+                <div className="text-wrapper-3">
+                Target values:
+                </div>
+                <SettingCard color="blue">
+                  <ProgressBar
+                    title="X"
+                    steps={200}
+                    max={50}
+                    min={-50}
+                    progressState={[targetPosition.x, (x: number) => setTargetPosition(prev => ({ ...prev, x: x}))]} />
+
+                  <ProgressBar
+                    title="Y"
+                    steps={200}
+                    min={-50}
+                    max={50}
+                    progressState={[targetPosition.y, (y: number) => setTargetPosition(prev => ({ ...prev, y}))]} />
                 </SettingCard>
-                <SettingCard color="green" onClick={() => startTransformation()} >
-                  Start transformation
+                <SettingCard color="orange">
+                  <ProgressBar 
+                    title="Rotation angle"
+                    steps={60} 
+                    max={360}
+                    progressState={[targetRotate, setTargetRotate]}  />
+                </SettingCard>
+                <SettingCard color="orange">
+                  <ProgressBar 
+                    title="Scale"
+                    steps={20} 
+                    max={5}
+                    min={0}
+                    toFixed={1}
+                    progressState={[targetScale, setTargetScale]}  />
+                </SettingCard>
+                <SettingCard color="green" onClick={() => resetShape()} >
+                  Reset
                 </SettingCard>
               </div>
             </div>

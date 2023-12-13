@@ -61,17 +61,19 @@ export const LeftPanel = ({ page, className }: Props): JSX.Element => {
               }
             />
           </Link>
-          <img
-            className="img-2"
-            alt="Tests button"
-            src={
-              page === "page-3"
-                ? "https://c.animaapp.com/HYZupsIx/img/tests-button-2.svg"
-                : page === "page-4"
-                ? "https://c.animaapp.com/HYZupsIx/img/tests-button-3.svg"
-                : "https://c.animaapp.com/HYZupsIx/img/tests-button-4.svg"
-            }
-          />
+          <Link to="/tests">
+            <img
+              className="img-2"
+              alt="Tests button"
+              src={
+                page === "page-3"
+                  ? "https://c.animaapp.com/HYZupsIx/img/tests-button-2.svg"
+                  : page === "page-4"
+                  ? "https://c.animaapp.com/HYZupsIx/img/tests-button-3.svg"
+                  : "https://c.animaapp.com/HYZupsIx/img/tests-button-4.svg"
+              }
+            />
+          </Link>
         </div>
       </div>
       <div className="bottom">

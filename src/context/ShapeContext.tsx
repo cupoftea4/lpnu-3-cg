@@ -1,5 +1,5 @@
 import { createContext, useState, useContext, ReactNode, useEffect } from 'react';
-import { Shape, Matrix } from '../utils/geometry';
+import { Shape, Matrix, Vertex } from '../utils/geometry';
 
 export type Point2D = {
   x: number;
@@ -18,12 +18,15 @@ interface ShapeContextValue {
   center: Point2D;
   setCenter: React.Dispatch<React.SetStateAction<Point2D>>;
   radius: number;
+  // Set angle of rotation in radians
   setRadius: (newVal: number) => void;
   setZoom: (newVal: number) => void;
   setRotate: (newVal: number) => void;
   setX: (newVal: number) => void;
   setY: (newVal: number) => void;
-  setShape: (newVal: Shape) => void;
+  anchor: Vertex;
+  setAnchor: (newVal: Vertex) => void;
+  setShape: React.Dispatch<React.SetStateAction<Shape>>;
   setIsDrawing: (newVal: boolean) => void;
   setIsNeedToSave: (newVal: boolean) => void;
 }
@@ -58,6 +61,7 @@ export const ShapeProvider = ({ children }: { children: ReactNode}) => {
   const [targetY, setTargetY] = useState(0);
   const [isDrawing, setIsDrawing] = useState(false);
   const [isNeedToSave, setIsNeedToSave] = useState(false);
+  const [anchor, setAnchor] = useState<Vertex>('center');
 
   const contextValue: ShapeContextValue = {
     shape: shape,
@@ -71,6 +75,8 @@ export const ShapeProvider = ({ children }: { children: ReactNode}) => {
     setRadius,
     isDrawing,
     isNeedToSave,
+    anchor,
+    setAnchor,
     setZoom,
     setRotate,
     setX: setTargetX,

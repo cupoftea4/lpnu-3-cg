@@ -1,8 +1,9 @@
 import { Shape } from "./geometry";
 
+const shapeColor = 'hotpink';
 const margin = 0
 
-export function gridToCanvas(gridSize: number, x: number, y: number, canvas: HTMLCanvasElement) {
+export function gridToCanvas(gridSize: number, x: number, y: number, canvas: HTMLCanvasElement): [number, number] {
   const gridStep = canvas ? canvas.width / (gridSize * 2) : 30;
   const canvasX = (x + gridSize) * gridStep;
   const canvasY = (-y + gridSize) * gridStep;
@@ -95,6 +96,10 @@ export function drawShape(shape: Shape, gridSize: number, canvas: HTMLCanvasElem
     ctx.lineTo(vertices[i][0], vertices[i][1]);
   }
   ctx.closePath();
-  ctx.strokeStyle = 'red';
+  ctx.strokeStyle = shapeColor;
+  ctx.fillStyle = shapeColor;
+  ctx.globalAlpha = 0.5;
+  ctx.fill();
+  ctx.globalAlpha = 1;
   ctx.stroke();
 }

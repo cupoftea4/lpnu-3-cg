@@ -1,4 +1,6 @@
-export type Matrix = number[][];
+export type Matrix = [number, number, number][];
+
+export type Vertex = "center" | number;
 
 export class Shape {
     verticesMatrix: Matrix;
@@ -20,11 +22,25 @@ export class Shape {
         return translationMatrix;
     }
 
-    getCenter(): [number, number] {
-        const x = (this.verticesMatrix[0][0] + this.verticesMatrix[2][0]) / 2;
-        const y = (this.verticesMatrix[0][1] + this.verticesMatrix[2][1]) / 2;
+    getVertex(vertex: Vertex): [number, number] {
+        if (vertex === "center") {
+            return this.getCenter();
+        }
+        if (vertex >= this.verticesMatrix.length) {
+            throw new Error('Vertex index out of bounds');
+        }
+        const x = this.verticesMatrix[vertex][0];
+        const y = this.verticesMatrix[vertex][1];
         return [x, y];
     }
+
+    getCenter(): [number, number] {
+        const sum = this.verticesMatrix.reduce(
+          (acc, v) => [acc[0] + v[0], acc[1] + v[1]],
+          [0, 0]
+        );
+        return [sum[0] / 6, sum[1] / 6];
+      }
 
     getScaleMatrix(sx: number, sy: number): Matrix {
         const scalingMatrix: Matrix = [
@@ -61,8 +77,8 @@ export class Shape {
         this.applyTransformation(matrix);
     }
 
-    scaleRotateAndMove(sx: number, sy: number, angle: number, x: number, y: number) {
-        const center = this.getCenter();
+    scaleRotateAndMove(sx: number, sy: number, angle: number, x: number, y: number, anchor: Vertex = 'center') {
+        const center = this.getVertex(anchor);
         let matrix = this.getTranslateMatrix(- center[0], - center[1]);
         matrix = matrixMultiply(matrix, this.getScaleMatrix(sx, sy));
         matrix = matrixMultiply(matrix, this.getTranslateMatrix(x, y));
@@ -76,6 +92,12 @@ export class Shape {
         return this.verticesMatrix;
     }
 
+    getRadius(): number {
+        const center = this.getCenter();
+        const distances = this.verticesMatrix.map((v) => Math.sqrt((v[0] - center[0]) ** 2 + (v[1] - center[1]) ** 2));
+        return Math.max(...distances);
+    }
+
 }
 
 function matrixMultiply(a: Matrix, b: Matrix): Matrix {
@@ -83,7 +105,7 @@ function matrixMultiply(a: Matrix, b: Matrix): Matrix {
         throw new Error('The number of columns in the first matrix must be equal to the number of rows in the second matrix.');
     }
 
-    const result: Matrix = new Array(a.length).fill(0).map(() => new Array(b[0].length).fill(0));
+    const result: Matrix = new Array(a.length).fill(0).map(() => new Array(b[0].length).fill(0)) as Matrix;
 
     for (let i = 0; i < a.length; i++) {
         for (let j = 0; j < b[0].length; j++) {
