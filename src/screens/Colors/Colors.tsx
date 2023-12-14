@@ -17,11 +17,16 @@ import {
 import ChooseColorSetting from "../../components/ChooseColorSetting/ChooseColorSetting"
 import "./styles.css"
 
+type OwnProps = {
+  onTheoryClick?: () => void;
+};
 
-export const Colors = () => {
+type Optional<T> = T | undefined;
+
+export const Colors = ({ onTheoryClick }: OwnProps) => {
   const [fileName, setFileName] = useState<string | null>("image.png");
   const [imageSrc, setImageSrc] = useState<string | null>("./image.png");
-  const [transformedImageSrc, setTransformedImageSrc] = useState<string | null>(null);
+  const [transformedImageSrc, setTransformedImageSrc] = useState<string | null>("./image.png");
   
   const [lightness, setLightness] = useState(1); // [0.1, 2.0]
   const [saturation, setSaturation] = useState(1); // [0.1, 2.0]
@@ -46,14 +51,25 @@ export const Colors = () => {
   const hoveredColor = `rgb(${rgbValues.r}, ${rgbValues.g}, ${rgbValues.b})`;
 
   const processImage = useCallback(() => {
-    console.log('processImage');
     if (!imageSrc) return;
-    const img = originalImage.current!;
-    const imgData = getImageData(img);
-    if (!imgData) return;
-    const newData = adjustForColor(imgData, rgbColors[color], lightness - 1, hue, saturation - 1, tolerance);
-    const transformedSrc = imageDataToDataUrl(newData, img.naturalWidth, img.naturalHeight);
-    setTransformedImageSrc(transformedSrc);
+    const img = originalImage.current;
+    if (!img) return;
+  
+    const handleImageLoad = () => {
+      const imgData: Optional<ImageData> = getImageData(img);
+      if (!imgData) {
+        console.error('Image data is not loaded properly.');
+        return;
+      }
+      const newData = adjustForColor(imgData, rgbColors[color], lightness - 1, hue, saturation - 1, tolerance);
+      const transformedSrc = imageDataToDataUrl(newData, img.naturalWidth, img.naturalHeight);
+      setTransformedImageSrc(transformedSrc);
+    };
+    if (!img.complete) {
+      img.onload = handleImageLoad;
+    } else {
+      handleImageLoad();
+    }
   }, [color, hue, imageSrc, lightness, saturation, tolerance]);
 
   const clearImageProcessing = useCallback(() => {
@@ -183,7 +199,7 @@ export const Colors = () => {
 
   return (
     <div className="colors">
-      <LeftPanel page="page-2" />
+      <LeftPanel page="page-2" onTheoryClick={onTheoryClick} />
       <div className="container">
         <div className="content">
           <div className="top-panel">

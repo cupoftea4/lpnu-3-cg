@@ -7,7 +7,11 @@ import { TopRightPanel } from "../../components/TopRightPanel"
 import { Point2D, useShapeInfo } from "../../context/ShapeContext";
 import "./styles.css";
 
-const Transform = () => {
+type OwnProps = {
+  onTheoryClick?: () => void;
+};
+
+const Transform = ({ onTheoryClick }: OwnProps) => {
   const [targetPosition, setTargetPosition] = useState<Point2D>({ x: 0, y: 0 });
   const [targetRotate, setTargetRotate] = useState(0);
   const [targetScale, setTargetScale] = useState(1);
@@ -50,7 +54,7 @@ const Transform = () => {
 
   return (
       <div className="transform">
-        <LeftPanel page="page-3" />
+        <LeftPanel page="page-3" onTheoryClick={onTheoryClick}/>
         <div className="container">
           <div className="content">
             <div className="top-panel">

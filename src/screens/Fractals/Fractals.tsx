@@ -23,7 +23,11 @@ enum Functions {
   X8,
 }
 
-export const Fractals = (): JSX.Element => {
+type OwnProps = {
+  onTheoryClick?: () => void;
+};
+
+export const Fractals = ({ onTheoryClick }: OwnProps): JSX.Element => {
   const [iterations, setIterations] = useState(2);
  
   const [currentFunction, setCurrentFunction] = useState(Functions.IceFractal);
@@ -47,7 +51,7 @@ export const Fractals = (): JSX.Element => {
 
   return (
     <div className="dark-fractals">
-      <LeftPanel className="left-panel" page="fractals" />
+      <LeftPanel className="left-panel" page="fractals" onTheoryClick={onTheoryClick}/>
       <div className="container">
         <div className="content">
           <div className="top-panel">

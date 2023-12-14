@@ -1,20 +1,23 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { LeftPanel } from '../../components/LeftPanel';
 import Test from '../../components/Test/Test';
 import { TopRightPanel } from '../../components/TopRightPanel';
 import { tests } from '../../utils/tests';
 import './styles.css';
+import { useAchievements } from '../../context/AchievementsContext';
 
 const Tests = () => {
   const [currentTest, setCurrentTest] = useState<number>(0);
   const [allTestsCompleted, setAllTestsCompleted] = useState<boolean>(false);
+
+  const { notifyAction } = useAchievements();
 
   // Function to handle when a correct answer is given
   const handleCorrectAnswer = () => {
     if (currentTest === tests.length - 1) {
       setCurrentTest(tests.length - 1)
       setAllTestsCompleted(true);
-      alert('You have finished the tests!');
+      notifyAction('all-tests');
       return;
     }
     setCurrentTest(currentTest + 1);
@@ -42,8 +45,6 @@ const Tests = () => {
   };
   
   const blockSizes = calculateBlockProgress();
-
-  console.log(blockSizes);
 
   return (
     <div className="transform">

@@ -39,7 +39,7 @@ export const tests: Question[] = [
       'майже самоподібні',
       'статистично самоподібні'
     ],
-    rightAnswer: 1,
+    rightAnswer: 0,
     block: 0,
   },
   {

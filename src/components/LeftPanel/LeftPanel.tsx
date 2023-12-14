@@ -4,9 +4,10 @@ import "./style.css";
 interface Props {
   page: "fractals" | "page-2" | "page-3" | "page-4";
   className?  : string;
+  onTheoryClick?: () => void;
 }
 
-export const LeftPanel = ({ page, className }: Props): JSX.Element => {
+export const LeftPanel = ({ page, className, onTheoryClick }: Props): JSX.Element => {
   return (
     <div className={`left-panel ${className}`}>
       <div className="top">
@@ -76,13 +77,18 @@ export const LeftPanel = ({ page, className }: Props): JSX.Element => {
           </Link>
         </div>
       </div>
-      <div className="bottom">
-        <div className="achievements" />
-        <img
-          className="img"
-          alt="Help"
-          src="https://c.animaapp.com/HYZupsIx/img/help-4.svg"
-        />
+      <div className="bottom" onClick={() => onTheoryClick?.()}>
+        {
+          page !== "page-4" &&
+          <>
+            <div className="achievements" />
+            <img
+              className="img"
+              alt="Help"
+              src="https://c.animaapp.com/HYZupsIx/img/help-4.svg"
+            />
+          </>
+        }
       </div>
     </div>
   );

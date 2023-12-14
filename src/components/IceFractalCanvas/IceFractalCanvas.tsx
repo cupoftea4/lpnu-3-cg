@@ -69,7 +69,7 @@ const _FractalCanvas: FC<OwnProps> = ({ iterations, lengthModifier = 0.8, angleM
 
   return (
     <>
-      <canvas id="fractal-canvas" className={styles.canvas} width="600" height="600" ref={canvasRef} />
+      <canvas id="fractal-canvas" className={styles.canvas} width="550" height="550" ref={canvasRef} />
     </>
   )
 }
